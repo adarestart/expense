@@ -4,7 +4,6 @@ import ReactEcharts from "echarts-for-react";
 import axios from 'axios';
 import '../App.css';
 import moment from 'moment';
-import { toHaveAccessibleDescription, toHaveDisplayValue } from "@testing-library/jest-dom/dist/matchers";
 
 export default class Balance extends React.Component {
 
@@ -28,25 +27,18 @@ export default class Balance extends React.Component {
 
         expenses:[],
         date:[]
-        //cat_amount:[],
-
-
     }
   
     componentDidMount() {
         this.refreshList();
         axios.get(`/api/expense_categories/`)
         .then(response => {
-            //console.log(response.data.data);
             this.setState ({ expense_categories: response.data.data},() => {
-              /*console.log(
-                "Status Updated: ",
-                this.state.categories
-              );*/});
+          });
         })
         axios.get(`/api/income_categories/`)
         .then(response => {
-            //console.log(response.data.data);
+            
             this.setState ({ income_categories: response.data.data},() => {
               /*console.log(
                 "Status Updated: ",
@@ -65,7 +57,6 @@ export default class Balance extends React.Component {
         .then(response => {
             console.log(response.data.data);
             this.setState ({ expenses: response.data.data},() => {
-
             });
             })
         
@@ -73,14 +64,12 @@ export default class Balance extends React.Component {
         .then(response => {
             console.log(response.data.data);
             this.setState ({ queries: response.data.data},() => {
-
               });
         })
         axios.get(`/api/cat_queries/`)
         .then(response => {
             console.log(response.data.data);
             this.setState ({ cat_queries: response.data.data},() => {
-
               });
         })
     }
@@ -97,7 +86,7 @@ export default class Balance extends React.Component {
         category_id: Number(this.state.choice)
       })
         .then(res => {
-          //const posts = res.data;
+          // Refresh Page each time when posting an expense
           this.refreshList();
           console.log(res);
           console.log(res.data);
@@ -116,7 +105,7 @@ export default class Balance extends React.Component {
         category_id: Number(this.state.choice)
       })
         .then(res => {
-          //const posts = res.data;
+          // Refresh Page each time when posting an income
           this.refreshList();
           console.log(res);
           console.log(res.data);
@@ -138,7 +127,6 @@ export default class Balance extends React.Component {
       console.log(this.state.date);
     }
     render() {
-      //console.log(this.state.vehicles);
 
       var balance = String(this.state.balance);
       var name = String(this.state.name)
@@ -147,12 +135,11 @@ export default class Balance extends React.Component {
       this.state.month_amount = this.state.queries.map(home => home.amount); 
       
       this.state.category=this.state.cat_queries.map(home => ({name:home.category, value:home.amount})); 
-      //this.state.category = this.state.cat_queries.map(home => home.category); 
-      //this.state.cat_amount = this.state.cat_queries.map(home => home.amount); 
-      // {this.state.expenses.map(home => <ListGroup.Item>{home.}</ListGroup.Item>)}
-        
-      console.log(this.state.category)
-      //console.log(this.state.month_amount)
+      //console.log(this.state.category)
+      /*<label>Date
+          <input type="text" name="date" onChange={this.handleDate.bind(this)}/>
+        </label>*/
+
       return (
         <Container fluid>
          
@@ -186,8 +173,6 @@ export default class Balance extends React.Component {
                   data: this.state.category
                 } ]
               }}
-             
-            
           />
           </Col>
           <Col xs={12} md={8}>
@@ -217,7 +202,7 @@ export default class Balance extends React.Component {
         </Row>
         <Row className="justify-content-center" md="auto">
           <CardGroup>
-          <Card style={{ width: '16rem' }}>
+          <Card style={{ width: '14rem' }}>
             <Card.Body>
               <Card.Title>Submit an Expense</Card.Title>
               <Card.Text></Card.Text>
@@ -225,9 +210,7 @@ export default class Balance extends React.Component {
                 <label>Amount
                   <input type="text" name="amount" onChange={this.handleAmount.bind(this)}/>
                 </label>
-                <label>Date
-                  <input type="text" name="date" onChange={this.handleDate.bind(this)}/>
-                </label>
+              
                 <label>
                   Category 
                   <select onChange={this.handleChoice.bind(this)}>
@@ -240,7 +223,7 @@ export default class Balance extends React.Component {
               <Card.Text></Card.Text>
             </Card.Body>
           </Card>
-          <Card style={{ width: '16rem' }} right="center">
+          <Card style={{ width: '14rem' }} right="center">
           <Card.Body>
               <Card.Title>Submit an Income</Card.Title>
               <Card.Text></Card.Text>
@@ -248,9 +231,7 @@ export default class Balance extends React.Component {
                 <label>Amount
                   <input type="text" name="amount" onChange={this.handleAmount.bind(this)}/>
                 </label>
-                <label>Date
-                  <input type="text" name="date" onChange={this.handleDate.bind(this)}/>
-                </label>
+                
                 <label>
                   Category 
                   <select onChange={this.handleChoice.bind(this)}>
@@ -264,16 +245,9 @@ export default class Balance extends React.Component {
             </Card.Body>
           </Card>
           </CardGroup>
-         
         </Row>
-
-        
       </Container>
-       
 
-        
-        
-  
     )}
 }
 

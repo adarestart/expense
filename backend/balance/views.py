@@ -95,22 +95,11 @@ class IncomeView(APIView):
 class QueryView(APIView):
     def get(self, request):
         result = ExpenseInfo.objects.raw("select date_format(date,'%%M')as date, sum(amount)as amount,count(id)as id from balance_expenseinfo group by date_format(date,'%%M');");
-        
-        #if(request.data.type):
-        #    result = IncomeInfo.objects.raw("select date_format(date,\"%M\"), sum(amount) from balance_expenseinfo group by date_format(date,\"%M\");");
-        #else:
-        #    result = ExpenseInfo.objects.raw("select date_format(date,\"%M\"), sum(amount) from balance_incomeinfo group by date_format(date,\"%M\");");
         serializer = QuerySerializer(result, many=True)
         return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
 
 class QueryCatView(APIView):
     def get(self, request):
-        #SELECT count(balance_expenseinfo.id)as id, sum(amount) as amount, name FROM balance_expenseinfo JOIN balance_expensecategory WHERE balance_expenseinfo.category_id_id=balance_expensecategory.id GROUP BY name;
         result = ExpenseInfo.objects.raw("SELECT count(balance_expenseinfo.id)as id, sum(amount) as amount, name as category FROM balance_expenseinfo JOIN balance_expensecategory WHERE balance_expenseinfo.category_id_id=balance_expensecategory.id GROUP BY category;");
-        
-        #if(request.data.type):
-        #    result = IncomeInfo.objects.raw("select date_format(date,\"%M\"), sum(amount) from balance_expenseinfo group by date_format(date,\"%M\");");
-        #else:
-        #    result = ExpenseInfo.objects.raw("select date_format(date,\"%M\"), sum(amount) from balance_incomeinfo group by date_format(date,\"%M\");");
         serializer = QueryCatSerializer(result, many=True)
         return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
