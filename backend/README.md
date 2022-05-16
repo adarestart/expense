@@ -1,5 +1,4 @@
-# Getting Started with Create React App
-
+# Getting Started with Django Backend
 ## Running Backend
 
 In the project directory, you can run:
