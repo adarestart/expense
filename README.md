@@ -17,7 +17,9 @@
 ## Website Demonstration
 
 ### Post an income/expense
-Posting an income/expense will automatically update the balance amount, pie chart and bar chart below.
+
+#### Posting an income/expense will automatically update the balance amount, pie chart and bar chart below.
+
 ![add_button](https://raw.githubusercontent.com/adarestart/expense/main/images/add_form.png)
 
 ### Display Balance 
